@@ -20,9 +20,9 @@ Il s'agit d'une application de chat en temps réel.
 - Historique des messages
 - Changement de mot de passe
 
-Lien du projet : 
+## Lien du projet : 
 
-Contact :
+## Contact :
 - https://github.com/deykid
 - https://github.com/Spiiiiro
 - https://github.com/qenqeste
