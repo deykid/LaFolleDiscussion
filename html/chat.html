@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>La Folle Discussion - Chat</title>
+  <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css'>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body onload="showRoom('Jordan')">
+  <!-- partial:index.partial.html -->
+  <div class="window-wrapper">
+    <div class="window-title">
+      <div class="dots">
+        <i class="fa fa-circle"></i>
+        <i class="fa fa-circle"></i>
+        <i class="fa fa-circle"></i>
+      </div>
+      <div class="title">
+        <span>La Folle Discussion</span>
+      </div>
+    </div>
+    <div class="window-area">
+      <div class="conversation-list">
+        <ul class="" id="rooms">
+          <li id="Room 1"><a href="#"><i class="fa fa-circle-o online"></i></i><span>Room 1</span></a></li>
+        </ul>
+        <div class="my-account">
+          <div class="name">
+            <span>Jordan</span>
+            <i class="fa fa-angle-down"></i>
+            <span class="availability">Available</span>
+          </div>
+        </div>
+      </div>
+      <div class="chat-area">
+        <div class="chat-list" id="chat">
+          <ul id="messages">
+          </ul>
+        </div>
+        <div class="input-area" id="input">
+          <form action="">
+            <div class="input-wrapper">
+              <input type="text" id="m" value="">
+            </div>
+            <input type="submit" value="SEND" id="send" class="send-btn">
+          </form>
+        </div>
+      </div>
+      <div class="right-tabs">
+        <ul class="tabs">
+          <li class="active">
+            <a href="#"><i class="fa fa-users"></i></a>
+          </li>
+        </ul>
+        <ul class="tabs-container">
+          <li class="active">
+            <ul class="member-list">
+              <li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Jordan</span></li>
+              <li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Tim</span></li>
+              <li><span class="status offline"><i class="fa fa-circle-o"></i></span><span>Maxime</span></li>
+            </ul>
+          </li>
+        </ul>
+        <i class="fa fa-cog"></i>
+      </div>
+    </div>
+  </div>
+  <!-- partial -->
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.11/jquery.mousewheel.min.js'></script>
+  <script  src="script.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="client.js"></script>
+</body>
+</html>
