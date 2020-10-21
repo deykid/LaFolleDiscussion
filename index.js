@@ -70,6 +70,12 @@ const ClientBDD = mariadb.createPool({
      connectionLimit: 5,
 });
 
+// Sauvegarde les messages en BDD
+ function BDD_save_message(Table,User_ID,Message){
+  var QUERY = "INSERT INTO " + Table +" (`DateTime`, `Text`, ID_users, ID_rooms) VALUES (current_timestamp(),'"+Message+"', '"+User_ID+"',1)";
+  ClientBDD.query(QUERY);
+}
+
 io.on('connection', function(socket){
   // Message de connexion au socket
   console.log('connected !');
@@ -87,5 +93,4 @@ io.on('connection', function(socket){
     var QUERY = "INSERT INTO la_folle_discussion.users (User_name, Email, Password, remember_token) VALUES('"+Username+"', '"+Email+"', '"+Password+"', '')";
     ClientBDD.query(QUERY);
   });
-
 });
