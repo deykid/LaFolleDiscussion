@@ -2,16 +2,53 @@ const http = require("http");
 const express = require("express");
 const socketio = require("socket.io");
 const path = require("path");
+const body = require("body-parser");
 const app = express();
 const httpserver = http.Server(app);
 const io = socketio(httpserver);
 
+app.use(body.urlencoded({ extended: true }));
+
 const gamedirectory = path.join(__dirname, "html");
 
 app.use(express.static(gamedirectory));
-
-var rooms = [];
-var usernames = [];
+app.post("/chat.html", function(req,res){
+  var Username = req.body.user;
+  var Password = req.body.PWd;
+  var verified;
+  ClientBDD.getConnection()
+  .then(conn => {
+  
+    conn.query("SELECT ID, User_name, Email, Password, remember_token FROM la_folle_discussion.users")
+      .then((rows) => {
+        rows.forEach(function(row){
+          if(Username == row.User_name && Password == row.Password)
+          {
+            verified = 1;
+          }
+        });
+        
+        if(verified==1){
+          console.log("Log In");
+          res.redirect("/chat.html");
+        }else{
+          console.log("not logged");
+          res.redirect("/");
+        }
+      })
+      .then((res) => {
+        conn.end();
+      })
+      .catch(err => {
+        //handle error
+        console.log(err); 
+        conn.end();
+      })
+      
+  }).catch(err => {
+    //not connected
+  });
+});
 
 // Connection haute dispo
 try {
@@ -23,6 +60,7 @@ try {
 
 // Connection à MariaDB
 const mariadb = require('mariadb');
+const { parse } = require("path");
 const ClientBDD = mariadb.createPool({
      host: '127.0.0.1', //Datacenter1 : 10.0.1.2 //Datacenter2 : 10.0.2.2
      user:'Admin', 
@@ -31,11 +69,6 @@ const ClientBDD = mariadb.createPool({
      port : '3306',
      connectionLimit: 5,
 });
-
-function BDD_save_message(Table,User_ID,Message){
-  var QUERY = "INSERT INTO " + Table +" (`DateTime`, `Text`, ID_users, ID_rooms) VALUES (current_timestamp(),'"+Message+"', '"+User_ID+"',1)";
-  ClientBDD.query(QUERY);
-}
 
 io.on('connection', function(socket){
   // Message de connexion au socket
@@ -48,4 +81,11 @@ io.on('connection', function(socket){
     io.emit('chat-message', message);
     BDD_save_message("messages",1,message.text);
   });
+  
+  /* Réception de l'événement 'create_user' */
+  socket.on('create_user', function (Username,Email,Password) {
+    var QUERY = "INSERT INTO la_folle_discussion.users (User_name, Email, Password, remember_token) VALUES('"+Username+"', '"+Email+"', '"+Password+"', '')";
+    ClientBDD.query(QUERY);
+  });
+
 });

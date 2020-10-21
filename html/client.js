@@ -1,5 +1,4 @@
 var socket = io();
-var i;
 
 /* Envoi d'un message */
 $('#input form').submit(function (e) {
